@@ -18,9 +18,7 @@ const ShipMent = () => {
     const handleNameblur=event=>{
         setName(event.target.value)
     }
-    const handleEmailblur=event=>{
-        setEmail(event.target.value)
-    }
+   
     const handleAddressdBlur=event=>{
         setAddress(event.target.value)
     }
