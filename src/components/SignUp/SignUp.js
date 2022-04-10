@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './SignUp.css'
 import Logo from '../../images/Google.svg'
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
 
 const SignUp = () => {
     const [email, setEmail]=useState('')
     const [password, setPassword]=useState('')
     const [confirmPassword, setConfirmPassword]=useState('')
     const [error, setError]=useState('')
+    const navigate = useNavigate()
+
+    const [createUserWithEmailAndPassword,hookError, user]=useCreateUserWithEmailAndPassword(auth)
 
     const handleEmailblur=event=>{
         setEmail(event.target.value)
@@ -18,6 +23,9 @@ const SignUp = () => {
     const handleConfirmPasswordBlur=event=>{
         setConfirmPassword(event.target.value)
     }
+    if(user){
+        navigate('/shop')
+    }
     const handleCreateUser=event=>{
         event.preventDefault()
 
@@ -25,6 +33,15 @@ const SignUp = () => {
               setError('your two password did not match')
               return;
         }
+        if(password.length <6){
+            setError('password must be 6 charecter or longer')
+            return;
+        }
+        createUserWithEmailAndPassword(email,password)
+        .then(result=>{
+           
+            console.log('user created');
+        })
     }
     return (
         <div className='form-container'>
@@ -44,6 +61,8 @@ const SignUp = () => {
                      <input onBlur={handleConfirmPasswordBlur} type="password" name="confirm-password" id="" required/>
                  </div>
                  <p>{error}</p>
+                 <p>{hookError}</p>
+
                  <input className='submit-btn' type="submit" value="Sign Up" />
            </form>
            <p> Already have an account? <Link className='form-link' to="/login">log in</Link></p>
