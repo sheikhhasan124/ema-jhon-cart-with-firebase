@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
+import auth from '../../firebase.init';
 
 
 
 const ShipMent = () => {
+    const [user]=useAuthState(auth)
     const [email, setEmail]=useState('')
     const [name, setName]=useState('')
     const [address, setAddress]=useState('')
@@ -42,7 +45,7 @@ const ShipMent = () => {
                  </div>
                  <div className="input-group">
                      <label htmlFor="email">Email</label>
-                     <input onBlur={handleEmailblur} type="email" name="email" id="" required/>
+                     <input value={user?.email} readOnly type="email" name="email" id="" required/>
                  </div>
                  <div className="input-group">
                      <label htmlFor="address">Address</label>
