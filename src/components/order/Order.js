@@ -23,7 +23,7 @@ const Order = () => {
            </div>
            <div className="cart-container">
                {/* use children */}
-                <Cart cart={cart}><Link to='/inventory'><button>proceed checkout</button></Link></Cart>
+                <Cart cart={cart}><Link to='/shipment'><button>proceed shipping</button></Link></Cart>
            </div>
         </div>
     );
